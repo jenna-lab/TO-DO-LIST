@@ -1,7 +1,7 @@
 body{
   text-align: center;
   background-color: bisque;
-  color: #FF6D62;
+  color: white;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 .todo-items{
@@ -20,7 +20,7 @@ table, th, td {
   /* text-decoration: line-through; */
 }
 .todo-card {
-  background-color:aqua;
+  background-color:#3D7EFF;
   width: 50%;
   /* height: 90vh; */
   border: 1px solid green;
