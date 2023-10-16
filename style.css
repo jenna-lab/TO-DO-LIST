@@ -1,8 +1,15 @@
 body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  background-color: bisque;
-  color: white;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  background-color: #E8E8E8	;
+  font-family: "Poppins";
+
+}
+#form{
+  display: flex;
+  justify-content: space-around;
 }
 .todo-items{
   display: flex;
@@ -10,6 +17,19 @@ body{
   padding-top: 50px;
   justify-content: center;
 }
+
+.btn {
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 4px;
+  background-color: #0197f6;
+}
+
+.update{
+  background-color: #0197f6;
+}
+
 table, th, td {
   border: 1px solid black;
   padding: 10px;
@@ -20,11 +40,15 @@ table, th, td {
   /* text-decoration: line-through; */
 }
 .todo-card {
-  background-color:#3D7EFF;
+  background-color:white;
   width: 50%;
   /* height: 90vh; */
-  border: 1px solid green;
+  /* border: 1px solid green; */
   padding: 20px;
   margin: 20px;
   border-radius: 10px;
+
+}
+.delete{
+  background-color: rgb(220 38 38);
 }

@@ -4,7 +4,7 @@ const editBtn = document.getElementById("editBtn");
 const form = document.getElementById("form");
 const title = document.getElementById("title");
 const description = document.getElementById("description");
-const date = document.getElementById("date");
+// const date = document.getElementById("date");
 let todoArray = [];
 
 //add listener to button
@@ -22,16 +22,16 @@ addBtn.addEventListener("click", (e) => {
     return;
   }
 
-  if (date.value === "") {
-    alert("Date is required");
-    return;
-  }
+  // if (date.value === "") {
+  //   alert("Date is required");
+  //   return;
+  // }
 
   //push an object with these keys
   todoArray.push({
     title: title.value,
     description: description.value,
-    date: date.value,
+    // date: date.value,
     completed: false,
   });
   form.reset();
@@ -57,10 +57,9 @@ const paintHtmlToDom = (data, id) => {
                     item.title
                   }</span>
                   <span id="descriptionText">${item.description}</span>
-                  <span id="dateText">${item.date}</span>
                   <span id="editBtn" style="padding-left: 10px;">
-                  <button id="editBtn" onclick="editTask(${index})" type="submit">Edit</button>
-                  </span><span><button onclick="deleteTask(${index})" id="deleteBtn" type="submit">Delete </button>
+                  <button id="editBtn" onclick="editTask(${index})" type="submit" class="btn">Edit</button>
+                  </span><span><button onclick="deleteTask(${index})" id="deleteBtn" type="submit" class="btn delete">Delete </button>
                   </span>
               </li>
           </ul>
@@ -95,7 +94,7 @@ function editTask(id) {
 
   title.value = item.title;
   description.value = item.description;
-  date.value = item.date;
+  // date.value = item.date;
 
   addBtn.style.display = "none";
   editBtn.style.display = "block";
@@ -105,7 +104,7 @@ function editTask(id) {
     updateTask(id, {
       title: title.value,
       description: description.value,
-      date: date.value,
+      // date: date.value,
     });
     editBtn.removeEventListener("click", clickHandler)
     addHtml();
@@ -135,6 +134,7 @@ function completeTask(target, id) {
   todoArray.splice(id, 1, item);
   addHtml();
 }
+
 
 //UPDATE A TASK
 function updateTask(id, newt) {
