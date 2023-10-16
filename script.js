@@ -7,9 +7,11 @@ const description = document.getElementById("description");
 const date = document.getElementById("date");
 let todoArray = [];
 
+//add listener to button
 addBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
+  //check if inputs are empty
   if (title.value === "") {
     alert("Title is required");
     return;
@@ -25,6 +27,7 @@ addBtn.addEventListener("click", (e) => {
     return;
   }
 
+  //push an object with these keys
   todoArray.push({
     title: title.value,
     description: description.value,
@@ -36,9 +39,11 @@ addBtn.addEventListener("click", (e) => {
   console.log(todoArray);
 });
 
+//PAINT html to the DOM
 const paintHtmlToDom = (data, id) => {
   const html = data
     .map((item, index) => {
+      //html template
       let htmlCode = `
           <div class="todo-items">
           <ul style="list-style: none;">
@@ -65,6 +70,7 @@ const paintHtmlToDom = (data, id) => {
     })
     .join("");
 
+//access parent with  Id
   const parentDiv = document.getElementById(id);
 
   if (parentDiv) {
@@ -72,6 +78,7 @@ const paintHtmlToDom = (data, id) => {
   }
 };
 
+//display todos to DOM
 function addHtml() {
   const completedTodos = todoArray.filter((todo) => todo.completed);
   const notCompletedTodos = todoArray.filter((todo) => !todo.completed);
@@ -80,6 +87,7 @@ function addHtml() {
   paintHtmlToDom(completedTodos, "completedTodos");
 }
 
+//EDIT A TASK
 function editTask(id) {
   const item = getTaskById(id);
 
@@ -105,6 +113,7 @@ function editTask(id) {
   editBtn.addEventListener("click", clickHandler);
 }
 
+//DELETE A TASK
 function deleteTask(id) {
   const item = getTaskById(id);
 
@@ -113,6 +122,8 @@ function deleteTask(id) {
   addHtml();
 }
 
+
+//MARK a task complete
 function completeTask(target, id) {
   console.log(id);
   const item = getTaskById(id);
@@ -125,6 +136,7 @@ function completeTask(target, id) {
   addHtml();
 }
 
+//UPDATE A TASK
 function updateTask(id, newt) {
   todoArray.splice(id, 1, newt);
 
@@ -134,6 +146,7 @@ function updateTask(id, newt) {
   addBtn.style.display = "block";
 }
 
+//GET A TASK BY id
 function getTaskById(id) {
   return todoArray.find((element, index) => index === id);
 }
