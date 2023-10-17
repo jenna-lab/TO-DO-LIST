@@ -37,6 +37,27 @@ addBtn.addEventListener("click", (e) => {
   form.reset();
   addHtml(todoArray);
   console.log(todoArray);
+
+    // Alert when a todo is added
+  const message = document.createElement("div");
+  message.textContent = "Todo added successfully!";
+  message.style.backgroundColor = "#4CAF50";
+  message.style.color = "white";
+  message.style.padding = "10px";
+  message.style.position = "fixed";
+  message.style.bottom = "30px";
+  message.style.right = "30px";
+  message.style.borderRadius = "5px";
+  message.style.zIndex = "1";
+  message.style.fontSize = "16px";
+
+  document.body.appendChild(message);
+
+  // Remove the message after 3 seconds
+  setTimeout(() => {
+    document.body.removeChild(message);
+  }, 3000);
+
 });
 
 //PAINT html to the DOM
