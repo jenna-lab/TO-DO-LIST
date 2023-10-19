@@ -1,177 +1,91 @@
-const addBtn = document.getElementById("addBtn");
-const editBtn = document.getElementById("editBtn");
+let todos = [];
 
-const form = document.getElementById("form");
-const title = document.getElementById("title");
-const description = document.getElementById("description");
-// const date = document.getElementById("date");
-let todoArray = [];
+function renderTodos() {
+  const tasksList = document.getElementById('tasksList');
+  const completedTodos = document.getElementById('completedTodos');
 
-//add listener to button
-addBtn.addEventListener("click", (e) => {
-  e.preventDefault();
+  tasksList.innerHTML = '';
+  completedTodos.innerHTML = '';
 
-  //check if inputs are empty
-  if (title.value === "") {
-    alert("Title is required");
-    return;
-  }
-
-  if (description.value === "") {
-    alert("Description is required");
-    return;
-  }
-
-  // if (date.value === "") {
-  //   alert("Date is required");
-  //   return;
-  // }
-
-  //push an object with these keys
-  todoArray.push({
-    title: title.value,
-    description: description.value,
-    // date: date.value,
-    completed: false,
-  });
-  form.reset();
-  addHtml(todoArray);
-  console.log(todoArray);
-
-    // Alert when a todo is added
-  const message = document.createElement("div");
-  message.textContent = "Todo added successfully!";
-  message.style.backgroundColor = "#0197f6";
-  message.style.color = "white";
-  message.style.padding = "10px";
-  message.style.position = "fixed";
-  message.style.top = "0px";
-  message.style.right = "30px";
-  message.style.borderRadius = "5px";
-  message.style.zIndex = "1";
-  message.style.fontSize = "16px";
-
-  document.body.appendChild(message);
-
-  // Remove the message after 3 second
-  setTimeout(() => {
-    document.body.removeChild(message);
-  }, 3000);
-
-});
-
-//PAINT html to the DOM
-const paintHtmlToDom = (data, id) => {
-  const html = data
-    .map((item, index) => {
-      //html template
-       let editButton = "";
-       if (!item.completed) {
-         editButton = `<span id="editBtn" style="padding-left: 10px;">
-          <button id="editBtn" onclick="editTask(${index})" type="submit" class="btn">Edit</button>
-          </span>`;
-       }let htmlCode = `
-          <div class="todo-items">
-          <ul style="list-style: none;">
-              <li id="taskDone">
-                  <span  id="checkmark" style="padding-right: 10px;">
-                    <input ${
-                      item.completed ? "checked" : ""
-                    } onchange="completeTask(this, ${index})" type="checkbox" />
-                  </span>
-                  <span style="padding-right: 10px;" id="titleText">${
-                    item.title
-                  }</span>
-                  <span id="descriptionText">${item.description}</span>
-                  ${item.completed ? "" : editButton}
-                  <span><button onclick="deleteTask(${index})" id="deleteBtn" type="submit" class="btn delete">Delete </button>
-                  </span>
-              </li>
-          </ul>
+  todos.forEach((todo, index) => {
+    const todoItem = `
+      <div class="todo-items">
+        <div>
+          <input type="checkbox" onchange="completeTodo(${index})" ${
+      todo.completed ? 'checked' : ''
+    } />
+        </div>
+        <div>${todo.title}</div>
+        <div>${todo.description}</div>
+        <div>
+          ${
+            todo.completed
+              ? ''
+              : `<button class="btn update" onclick="editTodo(${index})">Edit</button>`
+          }
+          <button class="btn delete" onclick="deleteTodo(${index})">Delete</button>
+        </div>
       </div>
-      `;
-       return htmlCode;
-    })
-    .join("");
+    `;
 
-//access parent with  Id
-  const parentDiv = document.getElementById(id);
+    if (todo.completed) {
+      completedTodos.innerHTML += `<div class="completed">${todoItem}</div>`;
+    } else {
+      tasksList.innerHTML += todoItem;
+    }
+  });
+}
 
-  if (parentDiv) {
-    parentDiv.innerHTML = html;
+function addTodo() {
+  const title = document.getElementById('title').value;
+  const description = document.getElementById('description').value;
+
+  if (title && description) {
+    todos.push({ title, description, completed: false });
+    renderTodos();
+    document.getElementById('title').value = '';
+    document.getElementById('description').value = '';
   }
-};
-
-//display todos to DOM
-function addHtml() {
-  const completedTodos = todoArray.filter((todo) => todo.completed);
-  const notCompletedTodos = todoArray.filter((todo) => !todo.completed);
-
-  paintHtmlToDom(notCompletedTodos, "tasksList");
-  paintHtmlToDom(completedTodos, "completedTodos");
 }
 
-//EDIT A TASK
-function editTask(id) {
-  const item = getTaskById(id);
+function deleteTodo(index) {
+  todos.splice(index, 1);
+  renderTodos();
+}
 
-  console.log({ item });
+function editTodo(index) {
+  const editBtn = document.getElementById('editBtn');
+  const addBtn = document.getElementById('addBtn');
 
-  title.value = item.title;
-  description.value = item.description;
-  // date.value = item.date;
+  editBtn.hidden = false;
+  addBtn.hidden = true;
 
-  addBtn.style.display = "none";
-  editBtn.style.display = "block";
+  document.getElementById('title').value = todos[index].title;
+  document.getElementById('description').value = todos[index].description;
 
-  const clickHandler = (event) => {
-    event.preventDefault();
-    updateTask(id, {
-      title: title.value,
-      description: description.value,
-      // date: date.value,
-    });
-    editBtn.removeEventListener("click", clickHandler)
-    addHtml();
+  editBtn.onclick = function () {
+    const title = document.getElementById('title').value;
+    const description = document.getElementById('description').value;
+
+    if (title && description) {
+      todos[index].title = title;
+      todos[index].description = description;
+      editBtn.hidden = true;
+      addBtn.hidden = false;
+      renderTodos();
+      document.getElementById('title').value = '';
+      document.getElementById('description').value = '';
+    }
   };
-  editBtn.addEventListener("click", clickHandler);
 }
 
-//DELETE A TASK
-function deleteTask(id) {
-  const item = getTaskById(id);
-
-  todoArray.splice(item, 1);
-  console.log(todoArray);
-  addHtml();
+function completeTodo(index) {
+  todos[index].completed = !todos[index].completed;
+  renderTodos();
 }
 
-
-//MARK a task complete
-function completeTask(target, id) {
-  console.log(id);
-  const item = getTaskById(id);
-  console.log(item);
-  taskDone = document.getElementById("taskDone");
-
-  item.completed = target.checked;
-
-  todoArray.splice(id, 1, item);
-  addHtml();
-}
-
-
-//UPDATE A TASK
-function updateTask(id, newt) {
-  todoArray.splice(id, 1, newt);
-
-  addHtml();
-  form.reset();
-  editBtn.style.display = "none";
-  addBtn.style.display = "block";
-}
-
-//GET A TASK BY id
-function getTaskById(id) {
-  return todoArray.find((element, index) => index === id);
-}
+renderTodos();
+document.getElementById('form').addEventListener('submit', function (e) {
+  e.preventDefault();
+  addTodo();
+});
