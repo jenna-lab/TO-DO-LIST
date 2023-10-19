@@ -37,20 +37,42 @@ table, th, td {
 }
 .completed{
   background-color: #ddd;
-  /* text-decoration: line-through; */
 }
 .todo-card {
   background-color:white;
   width: 60%;
-  /* height: 90vh; */
-  /* border: 1px solid green; */
+ 
   padding: 20px;
   margin: 20px;
-  border-radius: 10px;
-  
+  border-radius: 10px; 
 
 }
 .delete{
   background-color: rgb(220 38 38);
 }
 
+@media screen and (min-width:412px) {
+.todo-card {
+  width: 100%;
+  margin: 10px;
+}
+}
+
+@media screen and (max-width:360px) {
+  .todo-card {
+  width: 90%;
+  margin: 10px;
+}
+
+#form{
+ 
+  display: flex;
+  justify-content: space-evenly;
+}
+#title{
+  width: 90px;
+}
+#description{
+  width: 90px;
+}
+}
