@@ -41,7 +41,6 @@ table, th, td {
 .todo-card {
   background-color:white;
   width: 60%;
- 
   padding: 20px;
   margin: 20px;
   border-radius: 10px; 
@@ -51,7 +50,7 @@ table, th, td {
   background-color: rgb(220 38 38);
 }
 
-@media screen and (min-width:412px) {
+@media screen and (max-width:412px) {
 .todo-card {
   width: 100%;
   margin: 10px;
@@ -74,5 +73,45 @@ table, th, td {
 }
 #description{
   width: 90px;
+}
+}
+@media screen and (max-width:393px) {
+  .todo-card {
+  width: 90%;
+  margin: 10px;
+}
+
+#form{
+ 
+  display: flex;
+  justify-content: space-evenly;
+}
+#title{
+  width: 90px;
+}
+#description{
+  width: 90px;
+}
+
+}
+@media screen and (max-width:414px) {
+  .todo-card {
+  width: 100%;
+  /* margin: 10px; */
+}
+
+#form{
+  display: flex;
+  justify-content: space-evenly;
+}
+#title{
+  width: 90px;
+  border: 1px solid black;
+
+}
+#description{
+  width: 90px;
+  border: 1px solid black;
+
 }
 }
