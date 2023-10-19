@@ -41,11 +41,11 @@ addBtn.addEventListener("click", (e) => {
     // Alert when a todo is added
   const message = document.createElement("div");
   message.textContent = "Todo added successfully!";
-  message.style.backgroundColor = "#4CAF50";
+  message.style.backgroundColor = "#0197f6";
   message.style.color = "white";
   message.style.padding = "10px";
   message.style.position = "fixed";
-  message.style.bottom = "30px";
+  message.style.top = "0px";
   message.style.right = "30px";
   message.style.borderRadius = "5px";
   message.style.zIndex = "1";
@@ -53,7 +53,7 @@ addBtn.addEventListener("click", (e) => {
 
   document.body.appendChild(message);
 
-  // Remove the message after 3 seconds
+  // Remove the message after 3 second
   setTimeout(() => {
     document.body.removeChild(message);
   }, 3000);
@@ -65,28 +65,32 @@ const paintHtmlToDom = (data, id) => {
   const html = data
     .map((item, index) => {
       //html template
-      let htmlCode = `
+       let editButton = "";
+       if (!item.completed) {
+         editButton = `<span id="editBtn" style="padding-left: 10px;">
+          <button id="editBtn" onclick="editTask(${index})" type="submit" class="btn">Edit</button>
+          </span>`;
+       }let htmlCode = `
           <div class="todo-items">
           <ul style="list-style: none;">
               <li id="taskDone">
                   <span  id="checkmark" style="padding-right: 10px;">
                     <input ${
-                      data.completed ? "checked" : ""
+                      item.completed ? "checked" : ""
                     } onchange="completeTask(this, ${index})" type="checkbox" />
                   </span>
                   <span style="padding-right: 10px;" id="titleText">${
                     item.title
                   }</span>
                   <span id="descriptionText">${item.description}</span>
-                  <span id="editBtn" style="padding-left: 10px;">
-                  <button id="editBtn" onclick="editTask(${index})" type="submit" class="btn">Edit</button>
-                  </span><span><button onclick="deleteTask(${index})" id="deleteBtn" type="submit" class="btn delete">Delete </button>
+                  ${item.completed ? "" : editButton}
+                  <span><button onclick="deleteTask(${index})" id="deleteBtn" type="submit" class="btn delete">Delete </button>
                   </span>
               </li>
           </ul>
       </div>
       `;
-      return htmlCode;
+       return htmlCode;
     })
     .join("");
 

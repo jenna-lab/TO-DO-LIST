@@ -5,7 +5,6 @@ body{
   text-align: center;
   background-color: #E8E8E8	;
   font-family: "Poppins";
-
 }
 #form{
   display: flex;
@@ -16,6 +15,7 @@ body{
   gap: 40px;
   padding-top: 50px;
   justify-content: center;
+  
 }
 
 .btn {
@@ -41,14 +41,16 @@ table, th, td {
 }
 .todo-card {
   background-color:white;
-  width: 50%;
+  width: 60%;
   /* height: 90vh; */
   /* border: 1px solid green; */
   padding: 20px;
   margin: 20px;
   border-radius: 10px;
+  
 
 }
 .delete{
   background-color: rgb(220 38 38);
 }
+
